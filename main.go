@@ -63,7 +63,7 @@ func AliveHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req Request
 
-	q, _ := ioutil.ReadAll('{"query": "100 main st buffalo ny"}')
+	q, _ := ioutil.ReadAll("{\"query\": \"100 main st buffalo ny\"}")
 	json.Unmarshal(q, &req)
 
 	parsed := parser.ParseAddress(req.Query)
