@@ -53,20 +53,13 @@ func ParserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func PingHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/text")
-
-	w.Write("pong")
+	w.Header().Set("Content-Type", "text/plain")
+	w.Write([]byte("pong"))
 }
 
 func AliveHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-
-	var req Request
-
-	q, _ := ioutil.ReadAll("{\"query\": \"100 main st buffalo ny\"}")
-	json.Unmarshal(q, &req)
-
-	parsed := parser.ParseAddress(req.Query)
+	parsed := parser.ParseAddress([]byte('{"query": "100 main st buffalo ny"}'))
 	parseThing, _ := json.Marshal(parsed)
 	w.Write(parseThing)
 }
