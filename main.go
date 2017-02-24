@@ -54,7 +54,7 @@ func ParserHandler(w http.ResponseWriter, r *http.Request) {
 
 func PingHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
-	s := `{"query": "100 main st buffalo ny"}`
+	s := `pong`
 	w.Write([]byte(s))
 }
 
