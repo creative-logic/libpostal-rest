@@ -4,6 +4,9 @@
 
 Replace <host> with your host
 
+### Alive
+`curl -X GET <host>:8080/alive`
+
 ### Parser
 `curl -X POST -d '{"query": "100 main st buffalo ny"}' <host>:8080/parser`
 
