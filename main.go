@@ -19,6 +19,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/expand", ExpandHandler).Methods("POST")
 	r.HandleFunc("/parser", ParserHandler).Methods("POST")
+	r.HandleFunc("/ping", PingHandler).Methods("GET")
+	r.HandleFunc("/alive", AliveHandler).Methods("GET")
 	fmt.Println("listening on port 8080")
 	http.ListenAndServe(":8080", r)
 }
@@ -43,6 +45,25 @@ func ParserHandler(w http.ResponseWriter, r *http.Request) {
 	var req Request
 
 	q, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(q, &req)
+
+	parsed := parser.ParseAddress(req.Query)
+	parseThing, _ := json.Marshal(parsed)
+	w.Write(parseThing)
+}
+
+func PingHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/text")
+
+	w.Write("pong")
+}
+
+func AliveHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var req Request
+
+	q, _ := ioutil.ReadAll('{"query": "100 main st buffalo ny"}')
 	json.Unmarshal(q, &req)
 
 	parsed := parser.ParseAddress(req.Query)
